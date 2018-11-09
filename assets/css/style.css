@@ -1,0 +1,213 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+/************************************************
+ Front Page
+************************************************/
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  /* background-image: url(../../assets/img/ablimit-ablet-contrail-unsplash_3.jpg); */
+  background-color: #60C5C7;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  font-family: 'Montserrat', sans-serif;
+  text-align: left;
+
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
+}
+
+hr {
+   display: block;
+   height: 1px;
+   border: 0;
+   border-top: 1px solid #FFFFFF;
+   margin: 1em 0;
+   padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #01B0F1;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+a:hover {
+  color: #0178A5;
+}
+
+.form {
+  background: rgba(42, 8, 42, 0.9);
+  margin-top: 75px;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px 4px rgba(42, 8, 42, 0.3);
+}
+
+h1 {
+  color: #FFFFFF;
+  font-weight: 300;
+  margin: 20px 0 20px;
+}
+
+h2 {
+    color: #FFFFFF;
+    font-weight: 400;
+    margin: 0;
+}
+
+h3, h4, h5, h6 {
+  color: #FFFFFF;
+}
+
+p, ul, ol {
+    color: #FFFFFF;
+    margin: 0px 0px 20px 0px;
+}
+
+img {
+  border-radius: 4px;
+}
+
+table {
+  border-radius: 8px;
+}
+.table th {
+  border-top: none;
+}
+
+span.sizeOneTransp {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.0rem;
+}
+span.size1P {
+  font-size: 1.0rem;
+}
+span.sizeP9 {
+  font-size: 0.9rem;
+}
+span.sizeP75 {
+  font-size: 0.75rem;
+}
+span.sizeP5 {
+  font-size: 0.5rem;
+}
+
+label {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+input, textarea, select {
+  display: inline;
+  max-width: 650px;
+}
+textarea {
+  border: 2px solid #A0B3B0;
+  height: 8em;
+  resize: vertical;
+}
+input:focus, textarea:focus {
+  outline: 0;
+  border-color: #01B0F1;
+}
+button.textOnly {
+  background-color: transparent;
+  border-color: transparent;
+  color: #30B0f3;
+  font-size: 14px;
+}
+
+.numberCircle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 2px solid #337AB7;
+  background: #337AB7;
+  text-align: center;
+  vertical-align: middle;
+  color: #FFFFFF;
+  font-size: 36px;
+}
+.numberCircleReverse {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  background: #FFFFFF;
+  text-align: center;
+  vertical-align: middle;
+  color: #337AB7;
+  font-size: 36px;
+}
+
+/************************************************
+ Text Highlighting
+************************************************/
+::-moz-selection {
+  background: #60C5C7;
+  color: #1E061E;
+  text-shadow: none;
+}
+::selection {
+    background: #60C5C7;
+    color: #1E061E;
+    text-shadow: none;
+}
+
+/************************************************
+ Navigation Toolbar
+************************************************/
+.navbar-brand {
+	font-weight: 700;
+  font-size: 32px;
+  margin-right: 0em;
+}
+
+.navbar-default .navbar-brand {
+	color: #01B0F1;
+}
+
+.navbar-default {
+	background-color: rgba(255, 255, 255, 0.9);
+	border-color: transparent;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+	color: #000000;
+  font-size: 22px;
+	background-color: transparent;
+	border-bottom: 2px solid #000000
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border-color: transparent;
+  color: #545B62;
+  font-size: 22px;
+  margin-left: 6px;
+}
+.btn-secondary:hover, .btn-secondary:focus {
+  background: #0178A5;
+  border-color: #0178A5;
+}
+
+.dropdown-menu {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.dropdown-menu > a:hover {
+  background-color: rgba(200, 200, 200, 1);
+}
+
+.dropdown-divider {
+  border-top: 1px solid rgba(128, 128, 128, 0.80);
+}
