@@ -535,7 +535,7 @@ function buildAssignmentContent(assignID) {
   //Draw area chart of activity across days
   var areaArr = new Array();
   var maxDays = 0;
-  areaArr.push(['Day', 'Avgerage', 'Topic']);
+  areaArr.push(['Day', 'Topic', 'Average']);
   //Get length of array for bar chart (based on longest active day range of all topics)
   for (var i = 0; i < dayBreakdowns.length; i++) {
     var tmp = Math.abs(dayBreakdowns[i][2] - dayBreakdowns[i][1]);
@@ -571,7 +571,7 @@ function buildAssignmentContent(assignID) {
   }
   //Add the data points to the areaArr
   for (var i = 0; i < avgDist.length; i++) {
-    areaArr.push([i, avgDist[i], topicDist[i]]);
+    areaArr.push([i, topicDist[i], avgDist[i]]);
   }
   google.charts.setOnLoadCallback(drawAreaChart);
   function drawAreaChart() {
@@ -583,6 +583,7 @@ function buildAssignmentContent(assignID) {
         fontSize: 18,
         bold: true
       },
+      series: {1: {color: 'orange'}},
       legend: {position: 'bottom'}
     };
 
