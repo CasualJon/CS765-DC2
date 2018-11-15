@@ -432,7 +432,7 @@ function buildAssignmentContent(assignID) {
   // console.log("Assignment ID value: " + currentAssignment);
 
   //Load google chart type
-  google.charts.load("current", {packages:['corechart', 'orgchart']});
+  google.charts.load("current", {packages:['corechart']});
 
   //Get avg and median number of posts across all assignments
   var postCounts = getPostCountsPerTopic();
@@ -463,16 +463,29 @@ function buildAssignmentContent(assignID) {
   contentTop.appendChild(box03);
   //Bottom left (10) for volume of posts by topic
   var box10 = document.createElement('div');
-  box10.setAttribute("class", "col-md-6");
+  box10.setAttribute("class", "col-md-4");
   box10.setAttribute("style", "width: 100%; height: 300px;")
   contentBottom.appendChild(box10);
   //Bottom right (11) for volume of posts by student
   var box11 = document.createElement('div');
-  box11.setAttribute("class", "col-md-6");
+  box11.setAttribute("class", "col-md-8");
   box11.setAttribute("style", "width: 100%; height: 300px;")
   contentBottom.appendChild(box11);
 
+
+  //Link to Structure page
+  localStorage.setItem('typeParam', "topic");
+  localStorage.setItem('idParam', currentAssignment);
+  document.getElementById('link_space').innerHTML= "<span class=\"text-center\"><a href=\"./structure.html\" target=\"_blank\">View Topic Post Structure</a></span>";
+
+
   //Number Circles--------------------------------------------------------------
+  //All Assignments Identifier
+  var allNote = document.createElement('h4');
+  allNote.setAttribute("class", "text-center");
+  allNote.setAttribute("style", "margin-top: -16px; margin-left: -14px;");
+  allNote.innerHTML = "ALL";
+  box00.appendChild(allNote);
   //Average number of Topics/Assignments across all
   var topicCircle = document.createElement('div');
   topicCircle.setAttribute("class", "numberCircle");
@@ -484,13 +497,6 @@ function buildAssignmentContent(assignID) {
   topicCount.innerHTML = postCounts[0];
   topicCircle.appendChild(topicCount);
   box00.appendChild(topicCircle);
-  box00.appendChild(document.createElement('br'));
-  //All Assignments Identifier
-  var allNote = document.createElement('h4');
-  allNote.setAttribute("class", "text-center");
-  allNote.setAttribute("style", "margin-top: -16px; margin-left: -14px;");
-  allNote.innerHTML = "ALL";
-  box00.appendChild(allNote);
   //Median number of posts across all
   var postsCircle = document.createElement('div');
   postsCircle.setAttribute("class", "numberCircle");
@@ -502,6 +508,12 @@ function buildAssignmentContent(assignID) {
   postsCount.innerHTML = postCounts[1];
   postsCircle.appendChild(postsCount);
   box00.appendChild(postsCircle);
+  //Topoic Assignments Identifier
+  var assignNote = document.createElement('h4');
+  assignNote.setAttribute("class", "text-center");
+  assignNote.setAttribute("style", "margin-top: -16px; margin-left: -14px;");
+  assignNote.innerHTML = "TOPIC";
+  box01.appendChild(assignNote);
   //Total number of posts this topic
   var studentsCircle = document.createElement('div');
   studentsCircle.setAttribute("class", "numberCircleReverse");
@@ -513,13 +525,6 @@ function buildAssignmentContent(assignID) {
   studentsCount.innerHTML = assignments[assignIndx][1];
   studentsCircle.appendChild(studentsCount);
   box01.appendChild(studentsCircle);
-  box01.appendChild(document.createElement('br'));
-  //Topoic Assignments Identifier
-  var assignNote = document.createElement('h4');
-  assignNote.setAttribute("class", "text-center");
-  assignNote.setAttribute("style", "margin-top: -16px; margin-left: -14px;");
-  assignNote.innerHTML = "TOPIC";
-  box01.appendChild(assignNote);
   //Average number of posts per student
   var ppsCircle = document.createElement('div');
   ppsCircle.setAttribute("class", "numberCircleReverse");
@@ -587,11 +592,17 @@ function buildAssignmentContent(assignID) {
       legend: {position: 'bottom'}
     };
 
-    var chart = new google.visualization.AreaChart(box02);
+    var chart = new google.visualization.AreaChart(box11);
     chart.draw(data, options);
   }
 
   //Days Active Statistics - All Topics
+  //Add space to match circles on left
+  var allNote = document.createElement('h4');
+  allNote.setAttribute("class", "text-center");
+  allNote.setAttribute("style", "margin-top: -16px; margin-left: -14px;");
+  allNote.innerHTML = "ACTIVE DAYS";
+  box03.appendChild(allNote);
   var avgDays = 0;
   for (var i = 0; i < dayBreakdowns.length; i++) {
     var tmp = Math.abs(dayBreakdowns[i][2]-dayBreakdowns[i][1]);
@@ -609,13 +620,6 @@ function buildAssignmentContent(assignID) {
   avgDaysCount.innerHTML = (avgDays).toFixed(1);
   avgDaysCircle.appendChild(avgDaysCount);
   box03.appendChild(avgDaysCircle);
-  box03.appendChild(document.createElement('br'));
-  //Add space to match circles on left
-  var allNote = document.createElement('h4');
-  allNote.setAttribute("class", "text-center");
-  allNote.setAttribute("style", "margin-top: -16px; margin-left: -14px;");
-  allNote.innerHTML = "ACTIVE DAYS";
-  box03.appendChild(allNote);
   //Days Active Statistics - This Topic
   var myDays = Math.abs(dayBreakdowns[topicIndex][2]-dayBreakdowns[topicIndex][1]);
   myDays = Math.ceil(myDays / 86400000);
@@ -656,37 +660,24 @@ function buildAssignmentContent(assignID) {
       bubble: {textStyle: {fontSize: 11}},
       legend: {position: 'none'}
     };
-    var chart = new google.visualization.BubbleChart(box10);
+    var chart = new google.visualization.BubbleChart(box02);
     chart.draw(data, options);
   }
 
-  //Org chart of post relationship structure
-  var orgAry = new Array();
-  for (var i = 0; i < posts.length; i++) {
-    if (posts[i].topicID == currentAssignment) {
-      if (posts[i].parent == null) orgAry.push([(posts[i].id).toFixed(0), ""]);
-      else orgAry.push([(posts[i].id).toFixed(0), (posts[i].parent).toFixed(0)]);
-    }
-  }
-  google.charts.setOnLoadCallback(drawOrgChart);
-  function drawOrgChart() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Student ID');
-    data.addColumn('string', 'Parent Post');
-    data.addRows(orgAry);
-    var options = {
-      title: "Organization of Posts",
-      titleTextStyle: {
-        fontName: 'Montserrat',
-        fontSize: 18,
-        bold: true
-      },
-      size: "small"
-    };
-    var chart = new google.visualization.OrgChart(box11);
-    chart.draw(data, options);
-  }
-
+  //Likes & Character count
+  var lcCircles = "<div class=\"row\"><div class=\"col-6\">";
+  lcCircles += "<div class=\"numberCircle\"><span class=\"sizeOneTransp\">Avg Chars<br /></span><b>199</b></div>";
+  //TODO - insert Char #s
+  lcCircles += "<div class=\"numberCircle\"><span class=\"sizeOneTransp\">Avg Likes<br /></span><b>44</b></div>";
+  //TODO - insert number of likes
+  lcCircles += "</div><div class=\"col-6\">";
+  lcCircles += "<div class=\"numberCircleReverse\"><span class=\"size1P\">Chars/Post<br /></span><b>200</b></div>";
+  //TODO - insert Char #s
+  lcCircles += "<div class=\"numberCircleReverse\"><span class=\"size1P\">Likes<br /></span><b>55</b></div>";
+  //TODO - insert number of likes
+  lcCircles += "</div></div>";
+  box10.innerHTML = lcCircles;
+  //"<div class=\"numberCircle\"><span class=\"sizeOneTransp\">Avg Chars</span></div></div></div>";
 
   currentAssignment = null;
   currentStudent = null;
@@ -863,7 +854,7 @@ function buildStudentContent(studentID) {
   function drawAreaChart() {
     var data = google.visualization.arrayToDataTable(areaArr);
     var options = {
-      title: 'Post Activity: % Through Topic',
+      title: 'Post Activity: % Through Topics',
       titleTextStyle: {
         fontName: 'Montserrat',
         fontSize: 18,
@@ -950,7 +941,10 @@ function buildStudentContent(studentID) {
     },
     seriesType: 'bars',
     series: {1: {color: 'orange'}},
-    legend: {position: 'bottom'}
+    legend: {position: 'bottom'},
+    vAxis: {
+      viewWindow: {min: 0}
+    }
     };
     var chart = new google.visualization.ComboChart(box11);
     chart.draw(data, options);
