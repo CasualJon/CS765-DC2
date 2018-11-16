@@ -1306,6 +1306,6 @@ function getCharLikeStats() {
   result[2] = (result[2]/posts.length) * 100;
   result[1] = (result[1]/thisTopicCount);
   result[3] = (result[3]/thisTopicCount) * 100;
-  console.log(result);/
+  console.log(result);
   return result;
 } //END getCharLikeStats()
