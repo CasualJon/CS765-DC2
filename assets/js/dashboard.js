@@ -664,16 +664,18 @@ function buildAssignmentContent(assignID) {
     chart.draw(data, options);
   }
 
+  var charLikeStats = getCharLikeStats();
+
   //Likes & Character count
   var lcCircles = "<div class=\"row\"><div class=\"col-6\">";
-  lcCircles += "<div class=\"numberCircle\"><span class=\"sizeOneTransp\">Avg Chars<br /></span><b>199</b></div>";
+  lcCircles += "<div class=\"numberCircle\"><span class=\"sizeOneTransp\">Avg Chars<br /></span><b>" + (charLikeStats[0]).toFixed(1) + "</b></div>";
   //TODO - insert Char #s
-  lcCircles += "<div class=\"numberCircle\"><span class=\"sizeOneTransp\">Avg Likes<br /></span><b>44</b></div>";
+  lcCircles += "<div class=\"numberCircle\"><span class=\"sizeOneTransp\">Avg Likes %<br /></span><b>" + (charLikeStats[2]).toFixed(1) + "</b></div>";
   //TODO - insert number of likes
   lcCircles += "</div><div class=\"col-6\">";
-  lcCircles += "<div class=\"numberCircleReverse\"><span class=\"size1P\">Chars/Post<br /></span><b>200</b></div>";
+  lcCircles += "<div class=\"numberCircleReverse\"><span class=\"size1P\">Chars/Post<br /></span><b>" + (charLikeStats[1]).toFixed(1) + "</b></div>";
   //TODO - insert Char #s
-  lcCircles += "<div class=\"numberCircleReverse\"><span class=\"size1P\">Likes<br /></span><b>55</b></div>";
+  lcCircles += "<div class=\"numberCircleReverse\"><span class=\"size1P\">Likes %<br /></span><b>" + (charLikeStats[3]).toFixed(1) + "</b></div>";
   //TODO - insert number of likes
   lcCircles += "</div></div>";
   box10.innerHTML = lcCircles;
@@ -1282,3 +1284,28 @@ function getStudentRepliesFrom() {
   // console.log(result);
   return result;
 } //END getStudentRepliesFrom()
+////////////////////////////////////////////////////////////////////////////////
+//getCharLikeStats()
+function getCharLikeStats() {
+  //[AvgCharCntAll, AvgCharCntTopic, AvgLike%All, AvgLike%Topic]
+  var result = [0, 0, 0, 0];
+  var thisTopicCount = 0;
+  for (var i = 0; i < posts.length; i++) {
+    //AvgCharCntAll
+    result[0] += posts[i].info.textchars;
+    //AvgLike%All
+    if (posts[i].likes == true) result[2]++;
+    //thisTopicCount, AvgCharCntTopic, and AvgLike%Topic
+    if (posts[i].topicID == currentAssignment) {
+      thisTopicCount++;
+      result[1] += posts[i].info.textchars;
+      if (posts[i].likes == true) result[3]++;
+    }
+  }
+  result[0] = result[0]/posts.length;
+  result[2] = (result[2]/posts.length) * 100;
+  result[1] = (result[1]/thisTopicCount);
+  result[3] = (result[3]/thisTopicCount) * 100;
+  console.log(result);/
+  return result;
+} //END getCharLikeStats()
