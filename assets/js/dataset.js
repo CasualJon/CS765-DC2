@@ -27383,7 +27383,7 @@ var posts =
         "topicID": 4000,
         "groupID": 2000,
         "groupTopic": 1000
-    },
+    }
 ];
 //assignments:
   //Index 0 = assignment/topic ID
